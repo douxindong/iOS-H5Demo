@@ -1,0 +1,479 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="http://m.lifetest.com/test/jquery-1.11.0.min.js"></script>
+    <script src="demo.js"></script>
+
+</head>
+
+<body>
+    <div>demo 001-dxd</div>
+    <div class="content">
+
+        <div>
+            购物车<br /><span id="addcartresulttxt"></span> <br />
+            <input id="addcarttxt"  placeholder="商品id" value="23187" style="
+            width: 100%;
+            line-height: 28px;
+        "/><br />
+            <button id="addcartbtn" type="button">加入购物车</button>
+        </div><br />
+
+        <div>
+            登录<br />
+            <span id="sitxt"></span> <br />
+            <button id="loginbtn" type="button">点击登录</button>
+            <br /><br />
+            <button id="getuserinfobtn" type="button">获取用户信息</button>
+            <span id="userinfotxt"></span> <br />
+        </div><br />
+
+        <div>
+            礼品券<br /><span id="addgiftcouponresulttxt"></span> <br />
+            <input id="addgiftcoupontxt"  placeholder="参数" value='{"itemid":"","code":"","promotionid":""}' style="
+            width: 100%;
+            line-height: 28px;
+        "/><br />
+            <button id="addgiftcouponbtn" type="button">添加礼品券</button>
+        </div><br />
+
+        <div>
+            相册<br /><br />
+            <button id="openalbumbtn" type="button">打开相册选择图片</button><br /><br />
+            <img id="albumimg" /><br /><br />
+            <button id="saveimgtoalbumbtn" type="button">保存图片至相册</button>
+
+        </div><br />
+
+        <div>
+            提醒<br /><br />
+            <span id="noticetxt"></span> <br />
+            <button id="noticebtn" type="button">点击开启或关闭</button>
+        </div><br />
+
+        <div>
+            标题<br /><br />
+            <button id="settitlebtn" type="button">更新title</button>
+        </div><br />
+
+        <div>
+			<span id="sharetxt"></span> <br />
+		
+            h5分享<br />
+            <button id="h5sharebtn" type="button">打开h5分享</button>
+			<br /><br />
+			全部分享<br />
+            
+            <button id="sharebtn" type="button">打开全部分享</button>
+			
+        </div><br />
+
+        
+
+        <div>
+            支付<br />
+            <span id="payresult"></span><br />
+            <button id="createpaydatabtn" type="button">生成支付信息</button><br /><br />
+            <textarea id="wxpaytxt" rows="10" cols="50" placeholder="微信支付data">
+            </textarea><br /><br />
+            <button id="wxpaybtn" type="button">微信支付</button><br /><br />
+            <textarea id="alipaytxt" rows="10" cols="50" placeholder="支付宝支付data">
+                </textarea><br /><br />
+            <button id="alipaybtn" type="button">支付宝支付</button>
+        </div><br />
+
+        <div>
+            webview<br /><br />
+            <button id="refreshbtn" type="button">刷新webview</button>
+        </div><br />
+
+        <div>
+            打开原生页面<br />
+            <a href="usercenter/toshoppingcart">购物车</a><br />
+            <a href="inner:///item/23532">详情页</a><br />
+            <a href="www.lifevc.com/item/25292">详情页</a><br />
+            <a href="http://m.lifevc.com/activity/oneyearwashtwo">49元</a><br />
+            <a href="usercenter/coupon">优惠券</a><br />
+            <a href="usercenter/giftcoupon">礼品券</a><br />
+            <a href="usercenter/experiencecoupon">体验券</a><br />
+            <a href="usercenter/integral">积分</a><br />
+        </div><br />
+
+        <div>
+            <a href="http://m.lifetest.com/test/test-app/index.html?r=1" id="next">下一页</a>
+        </div>
+        <br /><br />
+    </div>
+    <div id="log"></div>
+
+
+
+    <script>
+        //呼出相册，选完照片后回调方法
+        function callAlbumCallback(imgbase64str) {
+            //var imgbase64str="test";
+            log("begin callAlbumCallback ");
+            try {
+                $("#albumimg").attr("src", "data:image/jpeg;base64," + imgbase64str);
+            } catch (error) {
+                log("callAlbumCallback error");
+                log(error);
+            }
+        }
+
+        //保存照片后回调方法
+        function savePhotoToAlbumCallback(result) {
+
+            setTimeout(function () {
+
+                log("begin savePhotoToAlbumCallback " + result);
+                try {
+                    if (result) {
+                        alert("保存成功");
+                    } else {
+                        alert("保存失败");
+                    }
+                } catch (error) {
+                    log("callAlbumCallback error");
+                    log(error);
+                }
+            }, 100);
+
+
+        }
+        //保存照片后回调方法
+        function cartNumCallback(result) {
+        	log("begin cartNumCallback " + result);
+                try {
+                    if (result) {
+                        alert(result);
+                    } else {
+                        alert(result);
+                    }
+                } catch (error) {
+                    log("cartNumCallback error");
+                    log(error);
+                }
+
+        }
+        //原生支付后回调的方法
+        function PayCallBack(status) {
+            log("begin PayCallBack " + status);
+            log(status);
+            if (status.toLowerCase()=="true") {
+                $("#payresult").text('支付成功');
+                alert('支付成功');
+
+            } else {
+                $("#payresult").text('支付失败');
+                alert('支付失败');
+            }
+        }
+        //原生app分享到微信后，用户从微信转回app时原生回调的js方法
+        function shareResult(status) {
+            log("原生调用了页面的分享回调方法status=" + status);
+            if (status == 1) {
+                //ToDo
+            }
+        }
+        //弹出去设置开启提醒的alert
+        function showEnableAppNoticeAlertCallback(result) {
+            log("begin showEnableAppNoticeAlertCallback ");
+            try {
+                if (result) {
+                    $("#noticetxt").text("已开启");
+                } else {
+                    $("#noticetxt").text("未开启");
+                    //去设置通知
+                    $("#noticebtn").unbind("click");
+                }
+            } catch (error) {
+                log("showEnableAppNoticeAlertCallback error");
+                log(error);
+            }
+        }
+        //原生app打开本页连接后回调的js方法
+        function initializeAsyn(si) {
+            log("begin initializeAsyn " + si);
+            try {
+                //ToDo
+                ustr = si;
+                $("#sitxt").text(si);
+                log("demo si=" + si);
+                log("demo l=" + ustr.toString().length);
+
+            } catch (error) {
+                log("initializeAsyn error");
+                log(error);
+            }
+        }
+        //调用原生获取用户信息方法后，原生回调的js方法
+        function userInfoCallback(json) {
+            log("begin userInfoCallback " + JSON.stringify(json));
+            try {
+                //ToDo
+                $("#userinfotxt").text(JSON.stringify(json));               
+
+            } catch (error) {
+                log("userInfoCallback error");
+                log(error);
+            }
+        }
+        //调用原生加入购物车方法后，原生回调的js方法
+        function addCartCallback(result) {
+            log("begin addCartCallback " + result);
+            try {
+                //ToDo                               
+                $("#addcartresulttxt").text("加入购物车："+result)
+
+            } catch (error) {
+                log("addCartCallback error");
+                log(error);
+            }
+        }
+
+        //调用原生使用礼品券方法后，原生回调的js方法
+        function addGiftCouponCallback(result) {
+            log("begin addGiftCouponCallback " + result);
+            try {
+                //ToDo                               
+                $("#addgiftcouponresulttxt").text("礼品券加入购物车："+result)
+
+            } catch (error) {
+                log("addGiftCouponCallback error");
+                log(error);
+            }
+        }
+
+    </script>
+    <script>
+        $(function () {
+            setInnerTitle('列表1111');
+            //购物车-----------------------------------------------------------------------------------
+            $("#addcartbtn").click(function () {
+                log($(this).text() + " click");
+                var id=$("#addcarttxt").val();                
+                addCart(id);
+                log($(this).text() + " stop");
+            });
+            //购物车-------------------------------------------------------------------------------
+
+            //礼品券-----------------------------------------------------------------------------------
+            $("#addgiftcouponbtn").click(function () {
+                log($(this).text() + " click");
+                var data=$("#addgiftcoupontxt").val();
+                if(!data||data=="") {alert("参数为空"); return; }
+                data=JSON.parse(data);
+                addGiftCoupon(data.itemid,data.code,data.promotionid);
+                log($(this).text() + " stop");
+            });
+            //礼品券-------------------------------------------------------------------------------
+
+            //相册-------------------------------------------------------------------------
+            //打开相册选择图片
+            $("#openalbumbtn").click(function () {
+                log($(this).text() + " click");
+                callAlbum();
+                log($(this).text() + " stop");
+            });
+            //保存图片
+            $("#saveimgtoalbumbtn").click(function () {
+                log($(this).text() + " click");
+                var imgbase64str = $("#albumimg").attr("src");
+                if (!imgbase64str || imgbase64str == "") {
+                    alert("请先选择图片");
+                    return;
+                }
+                savePhotoToAlbum(imgbase64str.replace("data:image/jpeg;base64,", ""));
+                log($(this).text() + " stop");
+            });
+            //相册--------------------------------------------------------------------------
+
+            //提醒------------------------------------------------------------------------------
+            var result = IsEnableAppNotice() || false;
+            if (result) {
+                $("#noticetxt").text("已开启");
+            } else {
+                $("#noticetxt").text("未开启");
+                //去设置通知
+                $("#noticebtn").click(function () {
+                    showEnableAppNoticeAlert();
+                });
+            }
+            //提醒------------------------------------------------------------------------------
+
+
+            //标题------------------------------------------------------------------------------------
+            $("#settitlebtn").click(function () {
+                log($(this).text() + " click");
+                setInnerTitle("更新title");
+                log($(this).text() + " stop");
+            });
+            //标题-------------------------------------------------------------------------------
+
+            //刷新webview------------------------------------------------------------------------------------
+            $("#refreshbtn").click(function () {
+                log($(this).text() + " click");
+                reloadWebView();
+                log($(this).text() + " stop");
+            });
+            //刷新webview-------------------------------------------------------------------------------
+
+
+            //分享------------------------------------------------------------------------------------
+            $("#h5sharebtn").click(function () {
+                log($(this).text() + " click");
+				var shareData = 
+				{
+						"H5ShareInfo": {
+							"MiniProCode": "",
+							"PageUrl": "http://m.lifevc.com",
+							"ShareDesc": "测试描述",
+							"ShareImgUrl": "http://m.lifevc.com",
+							"ShareLink": "http://m.lifevc.com",
+							"ShareTitle": "测试1",
+							"ShareType": 1
+						}
+					};
+                appShareUrl(shareData);
+                log($(this).text() + " stop");
+            });
+			
+			$("#sharebtn").click(function () {
+                log($(this).text() + " click");
+				var shareData = {
+						"H5ShareInfo": {
+							"MiniProCode": "",
+							"PageUrl": "http://m.lifevc.com",
+							"ShareDesc": "测试描述",
+							"ShareImgUrl": "http://m.lifevc.com",
+							"ShareLink": "http://m.lifevc.com",
+							"ShareTitle": "测试1",
+							"ShareType": 1
+						},
+						"ImageShareInfo": {
+							"MiniProCode": "",
+							"PageUrl": "http://m.lifevc.com",
+							"ShareDesc": "有赞",
+							"ShareImgUrl": "http://i1.lifevccdn.com/upload/cart/91b548e7aa354847a31309f21d857634.png",
+							"ShareLink": "https://h5.youzan.com/v2/showcase/goods?alias=2xj1oooyi7nj3",
+							"ShareTitle": "分享有赞",
+							"ShareType": 3
+						},
+						"MiniProShareInfo": {
+							"MiniProCode": "gh_37a5a52fcf1e",
+							"PageUrl": "http://m.lifevc.com",
+							"ShareDesc": "有赞",
+							"ShareImgUrl": "http://i1.lifevccdn.com/upload/cart/91b548e7aa354847a31309f21d857634.png",
+							"ShareLink": "https://h5.youzan.com/v2/showcase/goods?alias=2xj1oooyi7nj3",
+							"ShareTitle": "分享有赞",
+							"ShareType": 2
+						}
+					};
+                appShareUrl(shareData);
+                log($(this).text() + " stop");
+            });
+			
+            //分享-------------------------------------------------------------------------------
+
+
+            //登录------------------------------------------------------------------------------
+
+            //登录
+            $("#loginbtn").click(function () {
+                log($(this).text() + " click");
+                showLoginPopup();
+                log($(this).text() + " stop");
+            });
+
+            //用户信息
+            $("#getuserinfobtn").click(function () {
+                log($(this).text() + " click");
+                getUserInfo();
+                log($(this).text() + " stop");
+            });
+
+            //登录-----------------------------------------------------------------------------
+
+            //------------------------------------支付------------------------------------------
+            $("#createpaydatabtn").click(function () {
+            	log($(this).text() + " click");
+                setInnerTitle("更新titlessssssss");
+                log($(this).text() + " stop");
+                $.ajax({
+                    url: "http://rest-test.lifevc.com/pay/LV201905156560372700/alipay_App",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "ApiToken": "U3lzQXBpfDEyMzhlNTQ5NGRjYjQ3MTJiNDBjZjE4"
+                    },
+                    success: function (result) {
+                        $("#alipaytxt").text(result.InnerData.PayData);
+                        log("支付宝支付数据生成" + JSON.stringify(result));
+                    },
+					fail:function(result){
+						log("支付宝支付数据生成失败"+JSON.stringify(result));
+					}
+                });
+                $.ajax({
+                    url: "http://rest-test.lifevc.com/pay/LV201905156560372700/wxpay_App",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "ApiToken": "U3lzQXBpfDEyMzhlNTQ5NGRjYjQ3MTJiNDBjZjE4"
+                    },
+                    success: function (result) {
+                        $("#wxpaytxt").text(JSON.stringify(result.InnerData.PayData));
+                        log("支微信支付数据生成" + JSON.stringify(result));
+                    },
+					fail:function(result){
+						log("微信支付数据生成失败"+JSON.stringify(result));
+					}
+                });
+            });
+
+            //微信支付
+            $("#wxpaybtn").click(function () {
+                log($(this).text() + " click");
+                try {
+                    var json = $("#wxpaytxt").val();
+                    if (json == "") {
+                        alert("请先生成支付信息");
+                        return;
+                    }
+                    var paydata = JSON.parse(json);
+                    goPay("WxPay_App", paydata);
+                } catch (error) {
+                    log("wxgopay error");
+                    log(error);
+                }
+
+                log($(this).text() + " stop");
+            });
+            //支付宝支付
+            $("#alipaybtn").click(function () {
+                log($(this).text() + " click");
+                try {
+                    var json = $("#alipaytxt").val();
+                    if (json == "") {
+                        alert("请先生成支付信息");
+                        return;
+                    }
+                    var paydata = json;
+                    goPay("Alipay_App", paydata);
+                } catch (error) {
+                    log("alipaygopay error");
+                    log(error);
+                }
+                log($(this).text() + " stop");
+            });
+            //---------------------------------------支付--------------------------------------
+
+
+        });
+    </script>
+</body>
+
+</html>
