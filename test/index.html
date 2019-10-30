@@ -77,11 +77,13 @@
 			
 			if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
 			    location(false);
-alert(navigator.userAgent);
-			    window.location.href = ('https://d.lifevc.com/');
+				alert(navigator.userAgent);
+			    window.location.href = ('lifevciosApp://com.lifevc.shop');
 			};
 			
 			$('.btn').click(function () {
+				window.location.href = ('https://d.lifevc.com');
+				return;
 				location(true);
 			})
 		}
