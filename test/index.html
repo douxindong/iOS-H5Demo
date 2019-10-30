@@ -22,6 +22,19 @@
 	</style>
 <script src="jquery-3.2.1.slim.min.js"></script>
 <script type="text/javascript">
+// 判断浏览器
+	var Navigator = navigator.userAgent;
+	var ifChrome = Navigator.match(/Chrome/i) != null && Navigator.match(/Version\/\d+\.\d+(\.\d+)?\sChrome\//i) == null ? true : false;
+	var ifAndroid = (Navigator.match(/(Android);?[\s\/]+([\d.]+)?/)) ? true : false;
+	var ifiPad = (Navigator.match(/(iPad).*OS\s([\d_]+)/)) ? true : false;
+	var ifiPhone = (!ifiPad && Navigator.match(/(iPhone\sOS)\s([\d_]+)/)) ? true : false;
+	var ifSafari = (ifiPhone || ifiPad) && Navigator.match(/Safari/);
+	var version = 0;
+	ifSafari && (version = Navigator.match(/Version\/([\d\.]+)/));
+	// safari浏览器版本
+	version = parseFloat(version[1], 10);
+	// 是否从微信打开
+	var ifWeixin = navigator.userAgent.indexOf("MicroMessenger") >= 0; // weixin
 		window.onload=function () {
 		
 			 function isWeiXin() {
