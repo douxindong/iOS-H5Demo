@@ -33,6 +33,16 @@
 	ifSafari && (version = Navigator.match(/Version\/([\d\.]+)/));
 	// safari浏览器版本
 	version = parseFloat(version[1], 10);
+	// 由安卓APP提供
+	var AppConfig = {
+		"scheme": "xxx",
+		"package": "com.xxx.aos.aosdemo",
+		"action": "android.intent.action.VIEW",
+		"category": "android.intent.category.BROWSABLE",
+		"host": "www.xxx.com",
+		"FAILBACK_ANDROID": "https://www.pgyer.com/xxx",
+		"FAILBACK_IOS": "itms-apps://itunes.apple.com/us/app/li-fu-jia-ju-jia-li-que-xiang/id961925723?mt=8"
+	};
 	// 是否从微信打开
 	var ifWeixin = navigator.userAgent.indexOf("MicroMessenger") >= 0; // weixin
 		window.onload=function () {
