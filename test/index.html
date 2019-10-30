@@ -138,6 +138,16 @@
 					location();
 			})
 		}
+		// 当页面在后台运行时清空定时器防止页面跳转到下载页
+	var visibilitychange = function() {
+		var tag = document.hidden || document.webkitHidden;
+		tag && clearTimeout(loadTimer);
+	}
+	document.addEventListener('visibilitychange', visibilitychange, false);
+	document.addEventListener("webkitvisibilitychange", visibilitychange, false);
+	window.addEventListener("pagehide", function() {
+		clearTimeout(loadTimer);
+	}, false);
 	</script>
 </head>
 <body>
