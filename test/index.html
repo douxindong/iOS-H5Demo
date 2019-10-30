@@ -34,7 +34,7 @@
 					}
 				};
 
-			function  location(boolean isclick) {
+			function  location(isclick) {
 				
 				if(navigator.userAgent.match(/android/i)){
 					if (/imgo/i.test(navigator.userAgent)&&MgtvApi) {
@@ -76,11 +76,11 @@
 			}
 			
 			if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-			    location();
+			    location(false);
 			};
 			
 			$('.btn').click(function () {
-				location();
+				location(true);
 			})
 		}
 	</script>
