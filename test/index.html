@@ -59,7 +59,7 @@
 						}
         			}else{
         				// window.location.href = ('https://d.lifevc.com');
-        				$('.btn').click()();
+        				$(".btn").trigger('click');
 						// window.location.href = ('lifevciosApp://com.lifevc.shop');
 					}
 					
@@ -82,7 +82,10 @@
 				// return;
 			    location(false);
 			};
-			
+			$(".btn").on("click",function(){
+        		window.location.href = ('https://d.lifevc.com');
+				alert("hhah")
+    		});
 			$('.btn').click(function () {
 				window.location.href = ('https://d.lifevc.com');
 				alert("hhah")
