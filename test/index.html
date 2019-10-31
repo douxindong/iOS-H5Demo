@@ -77,7 +77,10 @@
 			
 			if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
 			    location(false);
-			    window.location.href = "./test1.html";
+			    window.setTimeout(function(){
+								window.location.href = "./test1.html";
+							},1000);
+			    
 			};
 			$('.btn').click(function () {
 				// window.location.href = "./test1.html";
