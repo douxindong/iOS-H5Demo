@@ -76,20 +76,12 @@
 			}
 			
 			if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-			    location(false);
-			    alert(document);
-			    if (!document.hidden) {
-							window.setTimeout(function(){
-								window.location.href = "./test1.html";
-							},1000);
-			    }
-			    
-			    
+			    // location(false);
+			    $('.btn').click();
 			};
 			$('.btn').click(function () {
-				// window.location.href = "./test1.html";
-				// return;
-				location(true);
+				alert("zhudong");
+				// location(true);
 			})
 		}
 	</script>
