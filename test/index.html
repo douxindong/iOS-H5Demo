@@ -23,8 +23,12 @@
 <script src="jquery-3.2.1.slim.min.js"></script>
 <script type="text/javascript">
 		window.onload=function () {
-		
-			 function isWeiXin() {
+			 if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+			    // location(false);
+			    $('.btn').click();
+			};
+		}
+		function isWeiXin() {
 					var ua = window.navigator.userAgent.toLowerCase();
 					console.log(ua);
 					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
@@ -71,13 +75,10 @@
 				});
 			}
 			
-			if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-			    location(false);
-			};
+			
 			$('.btn').click(function () {
 				location(true);
 			})
-		}
 	</script>
 </head>
 <body>
