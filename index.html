@@ -12,6 +12,15 @@
 
 <body>
     <div>demo 001-limery</div>
+<p>这是一个段落。</p>
+<button>切换</button>
+<script type="text/javascript">
+             $("button").click(function(){
+              $("p").slideToggle();
+             });
+             $("button").click();
+             
+</script>
     <div class="content">
 
         <div>
@@ -113,6 +122,7 @@
 
 
     <script>
+
         //呼出相册，选完照片后回调方法
         function callAlbumCallback(imgbase64str) {
             //var imgbase64str="test";
@@ -251,7 +261,9 @@
 
     </script>
     <script>
+
         $(function () {
+
             setInnerTitle('列表1111');
             //购物车-----------------------------------------------------------------------------------
             $("#addcartbtn").click(function () {
