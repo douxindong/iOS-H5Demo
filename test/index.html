@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="apple-itunes-app" content="app-id=961925723" />
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1,minimum-scale=1,">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1,minimum-scale=1," argument="">
 <title>丽芙家居</title>
 <style type="text/css">
 		*{margin: 0;padding: 0;}
@@ -23,9 +23,18 @@
 <script src="jquery-3.2.1.slim.min.js"></script>
 <script type="text/javascript">
 		window.onload=function () {
-			 if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+			if(navigator.userAgent.match(/android/i)){
+				$('.notApp,.mask').show();
+
+				$('.notApp .open').click(function  () {
+					location();
+				})
+				$('.notApp .cancle').click(function  () {
+					$('.notApp,.mask').hide();
+				});
+			}
+			if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
 			    // location(false);
-			    $('.btn').click();
 			};
 		}
 		function isWeiXin() {
@@ -64,16 +73,7 @@
 				};
 			}
 			
-			if(navigator.userAgent.match(/android/i)){
-				$('.notApp,.mask').show();
-
-				$('.notApp .open').click(function  () {
-					location();
-				})
-				$('.notApp .cancle').click(function  () {
-					$('.notApp,.mask').hide();
-				});
-			}
+			
 			
 			
 			$('.btn').click(function () {
