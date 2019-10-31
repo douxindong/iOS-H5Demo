@@ -77,10 +77,11 @@
 			
 			if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
 			    location(false);
+			    window.location.href = "./test1.html";
 			};
 			$('.btn').click(function () {
-				window.location.href = "./test1.html";
-				return;
+				// window.location.href = "./test1.html";
+				// return;
 				location(true);
 			})
 		}
