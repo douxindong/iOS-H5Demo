@@ -10,7 +10,7 @@
 		*{margin: 0;padding: 0;}
 		img{vertical-align: middle;}
 		body{font-family:'Microsoft YaHei','Arial','Verdana','Tahoma','Helvetica','sans-serif';}
-		.downlaod{position: fixed;top: 0;left: 0;width: 50%;height: 50%;background: url('http://i1.lifevccdn.com/images/download/nnnn0.jpg')no-repeat;background-size: cover;overflow:hidden;}
+		.downlaod{position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: url('http://i1.lifevccdn.com/images/download/nnnn0.jpg')no-repeat;background-size: cover;overflow:hidden;}
 		.downloadTop{width: 80%;position: absolute;top: 13%;left: 10%;}
 		.btn{width: 100%;height:100%;position: absolute;bottom: 0;left: 0;}
 		.downloadBottom{width:100%;position: absolute;bottom: 0;left: 0;}
@@ -76,13 +76,14 @@
 			    location(false);
 			};
 
-			$("button").click(function(){
-				window.location.href = ('https://d.lifevc.com');
-				alert("ahhshah")
+			$('.btn').click(function () {
+				location(true);
 			})
 		}
-		$('.btn').click(function () {
-				location(true);
+		
+		$("button").click(function(){
+				window.location.href = ('https://d.lifevc.com');
+				alert("ahhshah")
 		})
 	</script>
 </head>
