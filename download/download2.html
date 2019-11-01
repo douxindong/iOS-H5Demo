@@ -55,9 +55,12 @@
                       locationCall(iosStore)
                   } else {
                       locationCall(iosApp)
+                      console.log('isHide'+isHide);
                       window.setTimeout(function () {
                           if (!isHide) {
                               locationCall(iosStore)
+                          }else{
+                            console.log('setTimeout-isHide'+isHide);
                           }
                       }, 2000)
                   }
