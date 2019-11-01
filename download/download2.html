@@ -31,8 +31,9 @@
           }
           if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
               isIos = true
+              console.log('Document.visibilityState=='+Document.visibilityState);
           }
-          document.addEventListener("visibilitychange", function () {
+          document.addEventListener("visibilitychange", function (res) {
               isHide = true
           })
           document.getElementById("bg").onclick = function () {
