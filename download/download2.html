@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>丽芙家居</title>
+<meta name="apple-itunes-app" content="app-id=961925723"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<script type="text/javascript">
+
+      let isHide = false;
+      let isIos = false
+      let isAndroid = false
+      let androidApp = "lifevc://com.lifevc.shop";
+      let androidStore = "market://details?id=com.lifevc.shop";
+      let androidApk = "http://d.lifevc.com/android/android-lifevc-651-release.apk";
+      let androidWechat = "http://a.app.qq.com/o/simple.jsp?pkgname=com.lifevc.shop"
+      let iosApp = "https://d.lifevc.com/download2.html";
+      let iosStore = "itms-apps://itunes.apple.com/us/app/li-fu-jia-ju-jia-li-que-xiang/id961925723?mt=8";
+
+      function isWeiXin() {
+          if (window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == 'micromessenger') {
+              return true;
+          } else {
+              return false;
+          }
+      }
+
+      function openApp() {
+          if (navigator.userAgent.match(/android/i)) {
+              isAndroid = true
+          }
+          if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+              isIos = true
+          }
+          document.addEventListener("visibilitychange", function () {
+              isHide = true
+          })
+          document.getElementById("bg").onclick = function () {
+              isHide = false
+              if (isAndroid) {
+                  if (isWeiXin()) {
+                      locationCall(androidWechat)
+                  } else {
+                      locationCall(androidApp)
+                      window.setTimeout(function () {
+                          if (!isHide) {
+                              linkCall(androidStore)
+                              locationCall(androidApk)
+                          }
+                      }, 2000)
+                  }
+              }
+              if (isIos) {
+                  if (isWeiXin()) {
+                      locationCall(iosStore)
+                  } else {
+                      locationCall(iosApp)
+                      window.setTimeout(function () {
+                          if (!isHide) {
+                              locationCall(iosStore)
+                          }
+                      }, 2000)
+                  }
+              }
+          }
+      }
+
+      function locationCall(url) {
+          window.location = url;
+      }
+
+      function linkCall(url) {
+          let bg = document.getElementById("link");
+          bg.href = url
+          bg.click()
+      }
+
+  </script>
+</head>
+<body onload="openApp()">
+<div id="bg" class="bg"/>
+<a href="#" id="link"></a>
+</body>
+<style>
+  body {
+    background: #194342;
+    margin: 0px;
+  }
+
+  .bg {
+    width: 100%;
+    background-image: url('http://i1.lifevccdn.com/images/download/nnnn0.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding-top: 177.6%;
+  }
+</style>
+</html>
