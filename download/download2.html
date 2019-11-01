@@ -11,11 +11,11 @@
       let isIos = false
       let isAndroid = false
       let androidApp = "lifevc://com.lifevc.shop";
-      let androidStore = "market://details?id=com.lifevc.shop";
+      let androidStore = "http://a.app.qq.com/o/simple.jsp?pkgname=com.lifevc.shop"
       let androidApk = "http://d.lifevc.com/android/android-lifevc-651-release.apk";
-      let androidWechat = "http://a.app.qq.com/o/simple.jsp?pkgname=com.lifevc.shop"
-      let iosApp = "https://d.lifevc.com/download2.html";
+      let iosApp = "https://d.lifevc.com/download5.html";
       let iosStore = "itms-apps://itunes.apple.com/us/app/li-fu-jia-ju-jia-li-que-xiang/id961925723?mt=8";
+      let iosSearch = "?openStore=true";
 
       function isWeiXin() {
           if (window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == 'micromessenger') {
@@ -31,41 +31,37 @@
           }
           if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
               isIos = true
-              console.log('Document.visibilityState=='+Document.visibilityState);
           }
-          document.addEventListener("visibilitychange", function (res) {
+          document.addEventListener("visibilitychange", function () {
               isHide = true
           })
           document.getElementById("bg").onclick = function () {
               isHide = false
               if (isAndroid) {
                   if (isWeiXin()) {
-                      locationCall(androidWechat)
+                      locationCall(androidStore)
                   } else {
-                      locationCall(androidApp)
                       window.setTimeout(function () {
                           if (!isHide) {
-                              linkCall(androidStore)
                               locationCall(androidApk)
                           }
                       }, 2000)
+                      locationCall(androidApp)
                   }
               }
               if (isIos) {
                   if (isWeiXin()) {
                       locationCall(iosStore)
                   } else {
-                      locationCall(iosApp)
-                      console.log('isHide'+isHide);
-                      window.setTimeout(function () {
-                          if (!isHide) {
-                              locationCall(iosStore)
-                          }else{
-                            console.log('setTimeout-isHide'+isHide);
-                          }
-                      }, 2000)
+                      locationCall(iosApp + iosSearch)
                   }
               }
+          }
+          if (isIos && window.location.search == iosSearch) {
+              locationCall(iosStore)
+              window.setTimeout(function () {
+                  locationCall(iosApp)
+              }, 1000)
           }
       }
 
@@ -83,7 +79,7 @@
 </head>
 <body onload="openApp()">
 <div id="bg" class="bg"/>
-<a href="#" id="link"></a>
+<a href="#" id="link" target="_blank"></a>
 </body>
 <style>
   body {
@@ -100,3 +96,4 @@
   }
 </style>
 </html>
+
